@@ -1,0 +1,25 @@
+Trump is viewed as a populist (Prof. Susan Hunston, [1]) by many due to his use of language. 
+My hypothesis is that in comparison to a traditional leader type such as President Macron, President Trump is likely to use more 
+volatile words to evoke emotional reactions instead of trying to convey an idea or vision, this can be studied using sentiment analysis. I will analyse the complexity
+of his speech by examining how repetitive his speech is and the frequency of simple words when compared to the same analysis of Macron's speech.   
+
+“There is, then, evidence that Trump’s language is highly distinctive, but that this distinctiveness aligns him with scenarios of casual conversation. 
+	Although his language, both in content and in style, is odd for a political leader, it is familiar to his audience. It is the true language of populism.” - [1]
+
+By scraping the text of his September 2018 speech at the UN, that he was famously laughed at by attending world leaders for, as published by Politco [2].
+
+A comparison will then be made to President Macron's speech at the same UN summit [3], who is considered to be a centrist liberal as opposed to Trump who in the present day is a, heavily right leaning, Republican. 
+However he Trump has previously flip-flopped between the Democratic and Reform parties, and aligned as an Independent.This suggests further that he follows a populist ideaology or could simply 
+be honest and willing to change his views.  
+
+The comparisons goal is to see if there are any key differences between the leaders in terms of word complexity, and sentiment. 
+For my sentiment analysis I will be using the numerical AFINN (Finn, Arup, Nielsen) lexicon.
+I will carry out further analysis using the nrc (Saif Mohammed and Peter Turney), to study the categorisation of the unigrams (single words). 
+This lexicon assigns words with a score from -5 to 5, with negative values representing a negative sentiment. 
+I will then go on to see what these differences or similarities could imply based on the findings of linguistic studies.
+
+
+Links:
+[1]https://www.birmingham.ac.uk/research/perspective/donald-trump-language-of-populism.aspx
+[2]https://www.politico.com/story/2018/09/25/trump-un-speech-2018-full-text-transcript-840043
+[3]https://www.diplomatie.gouv.fr/en/french-foreign-policy/united-nations/events/united-nations-general-assembly-sessions/unga-s-73rd-session/article/united-nations-general-assembly-speech-by-president-emmanuel-macron-25-09-18

@@ -1,0 +1,7 @@
+https://www.youtube.com/watch?v=JM_J7ufS-BU
+
+https://www.cyclismo.org/tutorial/R/intermediatePlotting.html
+
+https://www.tidytextmining.com/dtm.html
+
+https://r4ds.had.co.nz/transform.html

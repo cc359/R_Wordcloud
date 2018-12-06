@@ -1,0 +1,3902 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Trump\_text\_mine.R},
+            pdfauthor={Chris Cooper},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Trump\_text\_mine.R}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Chris Cooper}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{Thu Dec 06 03:59:44 2018}
+
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: NLP
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(stringr)}
+\KeywordTok{library}\NormalTok{(wordcloud)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: RColorBrewer
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setwd}\NormalTok{(}\StringTok{"C:/Users/Chris Cooper/Desktop/Trump_Analysis/2018_UN/Macron_text_mining"}\NormalTok{)}
+
+
+\CommentTok{###Cleaning text file###}
+
+\CommentTok{#readLines("Speech_Politico_25_09_2018.txt") #reads the text}
+\CommentTok{#paste(readLines("Speech_Politico_25_09_2018.txt"), collapse = " ")}
+    \CommentTok{#collapses the text into a single vector, collpase variable can be }
+    \CommentTok{# iven a delimiter in this case a space between the previous vectors}
+
+\NormalTok{text <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\KeywordTok{readLines}\NormalTok{(}\StringTok{"Macron_Speech.txt"}\NormalTok{), }\DataTypeTok{collapse =} \StringTok{" "}\NormalTok{)}
+\NormalTok{text_punct <-}\StringTok{ }\KeywordTok{gsub}\NormalTok{(}\DataTypeTok{pattern =} \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{W"}\NormalTok{, }\DataTypeTok{replace =} \StringTok{" "}\NormalTok{, text)    }
+    \CommentTok{#gsub() takes a pattern and looks for a given set of chars that are not useful to the analysis }
+    \CommentTok{#e.g. W looks for spaces and punctuation , then gsub asks for a replacement for these removed chars}
+    \CommentTok{# the final arg is the variable we are applying it to}
+
+\NormalTok{text_num <-}\StringTok{ }\KeywordTok{gsub}\NormalTok{(}\DataTypeTok{pattern =} \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{d"}\NormalTok{,}\DataTypeTok{replace =} \StringTok{" "}\NormalTok{, text_punct)     }
+    \CommentTok{# d removes digits 0-9}
+
+\NormalTok{text_case <-}\StringTok{ }\KeywordTok{tolower}\NormalTok{(text_num)  }
+    \CommentTok{#make the text uniform by formatting case}
+
+\NormalTok{text_stopWords <-}\StringTok{ }\KeywordTok{removeWords}\NormalTok{(text_case, }\KeywordTok{stopwords}\NormalTok{()) }
+    \CommentTok{#removes stopwords (and, the, or, etc.) from a pre-defined list, can use array with c("and") as the second arg}
+
+\NormalTok{text_firstParse <-}\StringTok{ }\KeywordTok{gsub}\NormalTok{(}\DataTypeTok{pattern  =} \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{b[A-z]}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{b[1]"}\NormalTok{, }\DataTypeTok{replace =} \StringTok{" "}\NormalTok{,  text_stopWords)}
+    \CommentTok{#this removes any rogue single letters not picked up by stopWords b = string starts with (in this case letters A-z)}
+    \CommentTok{# the second b specifies  what the string ends with, [1] changes the speicfication to length of 1}
+
+\CommentTok{#reduce whitespace to single spacing}
+\NormalTok{text <-}\StringTok{ }\KeywordTok{stripWhitespace}\NormalTok{(text_firstParse)}
+
+\CommentTok{##Converting text to a character vector text_bag##}
+
+\CommentTok{#split the text string into seperate elements in the vector using str_split(arg1,pattern=) , arg1 = string to split, pattern= what determines the split}
+\NormalTok{text_bag <-}\StringTok{ }\KeywordTok{str_split}\NormalTok{(text, }\DataTypeTok{pattern =} \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{s+"}\NormalTok{) }
+
+\CommentTok{#in this case s+ means spaces limits with an extra space, in case any double spaces got through stripWhitespace}
+\CommentTok{# a text bag is a "bag of words"}
+
+\CommentTok{#convert the class of text_bag from a list to a character vector}
+\NormalTok{text_bag <-}\StringTok{ }\KeywordTok{unlist}\NormalTok{(text_bag)}
+
+
+\CommentTok{###Matching Words in text_bag to lexicons###}
+\CommentTok{#Clean lexicons and format to character vectors#}
+\NormalTok{poswords <-}\StringTok{  }\KeywordTok{paste}\NormalTok{(}\KeywordTok{readLines}\NormalTok{(}\StringTok{"Positive_Opinion_Lexicon.txt"}\NormalTok{), }\DataTypeTok{collapse =} \StringTok{" "}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in readLines("Positive_Opinion_Lexicon.txt"): incomplete final line
+## found on 'Positive_Opinion_Lexicon.txt'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{negwords <-}\StringTok{  }\KeywordTok{paste}\NormalTok{(}\KeywordTok{readLines}\NormalTok{(}\StringTok{"Negative_Opinion_Lexicon.txt"}\NormalTok{), }\DataTypeTok{collapse =} \StringTok{" "}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in readLines("Negative_Opinion_Lexicon.txt"): incomplete final line
+## found on 'Negative_Opinion_Lexicon.txt'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Split string etc.#}
+\NormalTok{poswords <-}\StringTok{ }\KeywordTok{str_split}\NormalTok{(poswords, }\DataTypeTok{pattern=}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{s+"}\NormalTok{)}
+\NormalTok{poswords <-}\StringTok{ }\KeywordTok{unlist}\NormalTok{(poswords)}
+
+\NormalTok{negwords <-}\StringTok{ }\KeywordTok{str_split}\NormalTok{(negwords, }\DataTypeTok{pattern=}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{s+"}\NormalTok{)}
+\NormalTok{negwords <-}\StringTok{ }\KeywordTok{unlist}\NormalTok{(negwords)}
+
+\CommentTok{#is not the field NA?, if NA then FALSE as it is NA statement is ... !is.na = IS NOT NA}
+\CommentTok{#!is.na(match(textbag,poswords)) }
+
+
+\CommentTok{#First piece of analysis#}
+\CommentTok{#Sum of negative words used and positive words used#}
+\NormalTok{Sum_Neg_Words <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(}\KeywordTok{match}\NormalTok{(text_bag,negwords)))}
+\NormalTok{Sum_Pos_Words <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(}\KeywordTok{match}\NormalTok{(text_bag,poswords)))}
+
+
+\CommentTok{##Word Cloud##}
+\CommentTok{#par(mfrow=c(1,3)) ##creates an array to present all 3 word clouds in}
+\KeywordTok{png}\NormalTok{(}\StringTok{"Trump_Speech.png"}\NormalTok{, }\DataTypeTok{width=}\DecValTok{1280}\NormalTok{,}\DataTypeTok{height=}\DecValTok{800}\NormalTok{)}
+\KeywordTok{wordcloud}\NormalTok{(text_bag, }\DataTypeTok{min_freq =} \DecValTok{4}\NormalTok{,}\DataTypeTok{random.order =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{scale =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\FloatTok{0.5}\NormalTok{), }\DataTypeTok{color =} \KeywordTok{rainbow}\NormalTok{(}\DecValTok{10}\NormalTok{), }\DataTypeTok{rot.per =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in tm_map.SimpleCorpus(corpus, tm::removePunctuation):
+## transformation drops documents
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in tm_map.SimpleCorpus(corpus, function(x) tm::removeWords(x,
+## tm::stopwords())): transformation drops documents
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strheight(words[i], cex = size[i], ...): "min_freq" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : "min_freq" is not a graphical parameter
+\end{verbatim}
+
+
+\end{document}
